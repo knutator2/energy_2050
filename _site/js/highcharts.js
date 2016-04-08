@@ -24,14 +24,13 @@ $(function () {
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '{point.y:.1f}'
                 }
             }
         },
 
         tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            enabled: false
         },
 
         series: [{
@@ -39,10 +38,12 @@ $(function () {
             colorByPoint: true,
             data: [{
                 name: 'Power to gas',
-                y: 56.33
+                y: 56.33,
+                color: '#F5E10C'
             }, {
                 name: 'Speicherseen',
-                y: 24.03
+                y: 24.03,
+                color: '#1784E3'
             }]
         }]
     });
@@ -71,14 +72,13 @@ $(function () {
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '{point.y:.1f}'
                 }
             }
         },
 
         tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+           enabled: false
         },
 
         series: [{
@@ -86,7 +86,8 @@ $(function () {
             colorByPoint: true,
             data: [{
                 name: 'Batterien',
-                y: 12
+                y: 12,
+                color: '#228012'
             }]
         }]
     });
@@ -116,22 +117,22 @@ $(function () {
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '{point.y:.1f}'
                 }
             }
         },
 
         tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            enabled: false
         },
 
         series: [{
             name: 'Brands',
-            colorByPoint: true,
+            colorByPoint: false,
             data: [{
                 name: 'Überschuss',
-                y: 12
+                y: 12,
+                color: '#ED1915'
             }]
         }]
     });

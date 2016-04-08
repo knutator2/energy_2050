@@ -2,34 +2,34 @@
 layout: default
 ---
 <div class="container-fluid">
-<div id="chart_container" ng-app="App" ng-controller="MainCtrl">
-  <div id="y_axis"></div>
-  <div id="chart"></div>
-  <div id="legend"></div>
-  <form id="offset_form" class="toggler">
-    <input type="radio" name="offset" id="lines" value="lines" checked>
-    <label class="lines" for="lines">lines</label><br>
-    <input type="radio" name="offset" id="stack" value="zero">
-    <label class="stack" for="stack">stack</label>
-  </form>
-</div>
-
-    <div class="onoffswitch">
-        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-        <label class="onoffswitch-label" for="myonoffswitch">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
+    <div id="chart_container" ng-app="App" ng-controller="MainCtrl">
+        <div id="y_axis"></div>
+        <div id="chart"></div>
+        <div id="legend"></div>
+        <form id="offset_form" class="toggler">
+            <input type="radio" name="offset" id="lines" value="lines" checked>
+            <label class="lines" for="lines">lines</label><br>
+            <input type="radio" name="offset" id="stack" value="zero">
+            <label class="stack" for="stack">stack</label>
+        </form>
     </div>
 
 
     <div class="row">
 
-        <div class="col-md-4" id="balkendiagramm_saison"></div>
+        <div class="col-xs-9 col-sm-5 col-md-5" id="balkendiagramm_saison" style="height: 300px;"></div>
 
-        <div class="col-md-4" id="balkendiagramm_tag" style="width:30%; height:400px;"></div>
-
-        <div class="col-md-4" id="balkendiagramm_ueberschuss" style="width:30%; height:400px;"></div>
+        <div class="col-xs-6 col-sm-3 col-md-3">
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+            <div id="balkendiagramm_tag" style="height:300px;"></div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3" id="balkendiagramm_ueberschuss" style="height:300px;"></div>
 
 
     </div>

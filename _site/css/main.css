@@ -479,3 +479,15 @@ pre {
 .wrapper {
   width: 100%;
   max-width: 2000px; }
+
+.onoffswitch {
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px; }
+
+#balkendiagramm_saison {
+  margin-top: 60px; }
+
+#balkendiagramm_ueberschuss {
+  margin-top: 60px; }
