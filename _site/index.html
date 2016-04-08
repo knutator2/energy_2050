@@ -58,17 +58,17 @@
     <div class="page-content">
       <div class="wrapper">
         <div class="container-fluid">
-    <div id="chart_container">
-        <div id="y_axis"></div>
-        <div id="chart"></div>
-        <div id="legend"></div>
-        <form id="offset_form" class="toggler">
-            <input type="radio" name="offset" id="lines" value="lines" checked>
-            <label class="lines" for="lines">lines</label><br>
-            <input type="radio" name="offset" id="stack" value="zero">
-            <label class="stack" for="stack">stack</label>
-        </form>
-    </div>
+<div id="chart_container" ng-app="App" ng-controller="MainCtrl">
+  <div id="y_axis"></div>
+  <div id="chart"></div>
+  <div id="legend"></div>
+  <form id="offset_form" class="toggler">
+    <input type="radio" name="offset" id="lines" value="lines" checked>
+    <label class="lines" for="lines">lines</label><br>
+    <input type="radio" name="offset" id="stack" value="zero">
+    <label class="stack" for="stack">stack</label>
+  </form>
+</div>
 
     <div class="onoffswitch">
         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
@@ -142,7 +142,8 @@
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="js/d3.layout.min.js" charset="utf-8"></script>
 <script src="js/rickshaw.min.js" charset="utf-8"></script>
-<script src="/js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="js/main.js"></script>
 <script src="js/jquery-2.2.3.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="js/highcharts.js"></script>
