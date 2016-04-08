@@ -2,7 +2,7 @@
 layout: default
 ---
 <div class="container-fluid">
-<div id="chart_container" ng-app="App" ng-controller="MainCtrl">
+<div id="chart_container" ng-app="App" ng-controller="MainCtrl" >
   <div id="y_axis"></div>
   <div id="chart"></div>
   <div id="legend"></div>
@@ -13,7 +13,11 @@ layout: default
     <label class="stack" for="stack">stack</label>
   </form>
 </div>
-
+    <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width: 900px;">
+        <div class="ui-slider-range ui-widget-header" style="left: 13.3691%; width: 35.566%;"></div>
+        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 13.3691%;"></a>
+        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 48.9351%;"></a>
+    </div>
     <div class="onoffswitch">
         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
         <label class="onoffswitch-label" for="myonoffswitch">
@@ -21,16 +25,9 @@ layout: default
             <span class="onoffswitch-switch"></span>
         </label>
     </div>
-
-
     <div class="row">
-
         <div class="col-md-4" id="balkendiagramm_saison"></div>
-
         <div class="col-md-4" id="balkendiagramm_tag" style="width:30%; height:400px;"></div>
-
         <div class="col-md-4" id="balkendiagramm_ueberschuss" style="width:30%; height:400px;"></div>
-
-
     </div>
 </div>
