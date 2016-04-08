@@ -2,9 +2,9 @@
 layout: default
 ---
 <div class="container-fluid">
-    <div id="chart_container" ng-app="App" ng-controller="MainCtrl" >
+    <div id="chart_container" ng-app="App" ng-controller="MainCtrl">
         <div id="y_axis"></div>
-        <div id="chart"></div>
+        <div id="chart" ng-click="rickshawClick()"></div>
         <div id="legend"></div>
         <form id="offset_form" class="toggler">
             <input type="radio" name="offset" id="lines" value="lines" checked>
