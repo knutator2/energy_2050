@@ -2,17 +2,17 @@
 layout: default
 ---
 <div class="container-fluid">
-    <div id="chart_container">
-        <div id="y_axis"></div>
-        <div id="chart"></div>
-        <div id="legend"></div>
-        <form id="offset_form" class="toggler">
-            <input type="radio" name="offset" id="lines" value="lines" checked>
-            <label class="lines" for="lines">lines</label><br>
-            <input type="radio" name="offset" id="stack" value="zero">
-            <label class="stack" for="stack">stack</label>
-        </form>
-    </div>
+<div id="chart_container" ng-app="App" ng-controller="MainCtrl">
+  <div id="y_axis"></div>
+  <div id="chart"></div>
+  <div id="legend"></div>
+  <form id="offset_form" class="toggler">
+    <input type="radio" name="offset" id="lines" value="lines" checked>
+    <label class="lines" for="lines">lines</label><br>
+    <input type="radio" name="offset" id="stack" value="zero">
+    <label class="stack" for="stack">stack</label>
+  </form>
+</div>
 
     <div class="onoffswitch">
         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
