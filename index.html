@@ -1,15 +1,36 @@
 ---
 layout: default
 ---
+<div class="container-fluid">
+    <div id="chart_container">
+        <div id="y_axis"></div>
+        <div id="chart"></div>
+        <div id="legend"></div>
+        <form id="offset_form" class="toggler">
+            <input type="radio" name="offset" id="lines" value="lines" checked>
+            <label class="lines" for="lines">lines</label><br>
+            <input type="radio" name="offset" id="stack" value="zero">
+            <label class="stack" for="stack">stack</label>
+        </form>
+    </div>
 
-<div id="chart_container">
-  <div id="y_axis"></div>
-  <div id="chart"></div>
-  <div id="legend"></div>
-  <form id="offset_form" class="toggler">
-    <input type="radio" name="offset" id="lines" value="lines" checked>
-    <label class="lines" for="lines">lines</label><br>
-    <input type="radio" name="offset" id="stack" value="zero">
-    <label class="stack" for="stack">stack</label>
-  </form>
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+        <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-4" id="balkendiagramm_saison"></div>
+
+        <div class="col-md-4" id="balkendiagramm_tag" style="width:30%; height:400px;"></div>
+
+        <div class="col-md-4" id="balkendiagramm_ueberschuss" style="width:30%; height:400px;"></div>
+
+
+    </div>
 </div>
