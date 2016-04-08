@@ -1,6 +1,6 @@
-.idea/
-/data/
+.idea
+/data
 .project
-/_site/
+/_site
 .buildpath
-/.sass-cache/
+/.sass-cache
