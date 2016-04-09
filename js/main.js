@@ -223,7 +223,7 @@ app.controller('MainCtrl', function ($scope, data) {
             },
 
             series: [{
-                name: 'Summe der erneuerbaren Produktion ohne PV',
+                name: 'Erneuerbare Produktion ohne PV',
                 data: energy_data.map(function(item) {
                     return item.b - item.e
                 }),
@@ -243,7 +243,7 @@ app.controller('MainCtrl', function ($scope, data) {
                 }
                 },
                 {
-                    name: 'Gesamt mit PV',
+                    name: 'Erneuerbare Produktion mit PV',
                     data: energy_data.map(function(item) {
                         return item.b
                     }),
@@ -260,7 +260,29 @@ app.controller('MainCtrl', function ($scope, data) {
                                 graphClick(event);
                             }
                         }
-                    }
+                    },
+                    color: '#FF9500'
+                },
+                {
+                    name: 'Landesverbrauch',
+                    data: energy_data.map(function(item) {
+                        return item.a
+                    }),
+                    pointStart: 1199142000000,
+                    pointInterval: 10800000,
+                    allowPointSelect: true,
+                    tooltip: {
+                        valueDecimals: 1,
+                        valueSuffix: 'MW'
+                    },
+                    point: {
+                        events: {
+                            click: function(event) {
+                                graphClick(event);
+                            }
+                        }
+                    },
+                    color: '#f00'
                 }],
             legend: {
                 enabled: true,
