@@ -12,7 +12,7 @@ description: >
   Wir simulieren die Stromproduktion 2050 basierend auf den Wetterdaten 2002 bis 2008. Es entsteht 
   eine hoch volatile Stromversorgung, mit massiven Sommerüberschüssen und Energiemanko im Winter. 
   Wir zeigen auf, wie die Schwankungen mit saisonalen Speichern und Tagesspeichern (Batteriespeicherung) 
-  aufgefangen werden kann und damit die Energiewende möglich wird.
+  aufgefangen werden können und damit die Energiewende möglich wird.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: jekyllrb
