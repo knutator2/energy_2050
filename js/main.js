@@ -159,73 +159,81 @@ app.controller('MainCtrl', function ($scope, data) {
         }]
     });
 
-    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=large-dataset.json&callback=?', function (data) {
 
-        // Create a timer
-        var start = +new Date();
 
-        // Create the chart
-        $('#chart-container').highcharts('StockChart', {
-            chart: {
-                events: {
-                    load: function () {
-                        if (!window.isComparing) {
-                            this.setTitle(null, {
-                                text: ''
-                            });
-                        }
-                    }
-                },
-                zoomType: 'x'
-            },
 
-            rangeSelector: {
+    // Create the chart
+    $('#chart-container').highcharts('StockChart', {
 
-                buttons: [{
-                    type: 'day',
-                    count: 3,
-                    text: '3d'
-                }, {
-                    type: 'week',
-                    count: 1,
-                    text: '1w'
-                }, {
-                    type: 'month',
-                    count: 1,
-                    text: '1m'
-                }, {
-                    type: 'month',
-                    count: 6,
-                    text: '6m'
-                }, {
-                    type: 'year',
-                    count: 1,
-                    text: '1y'
-                }, {
-                    type: 'all',
-                    text: 'All'
-                }],
-                selected: 3
-            },
+        rangeSelector: {
 
-            yAxis: {
-                title: {
-                    text: 'Energielevel (MW)'
-                }
-            },
+            buttons: [{
+                type: 'day',
+                count: 3,
+                text: '3d'
+            }, {
+                type: 'week',
+                count: 1,
+                text: '1w'
+            }, {
+                type: 'month',
+                count: 1,
+                text: '1m'
+            }, {
+                type: 'month',
+                count: 6,
+                text: '6m'
+            }, {
+                type: 'year',
+                count: 1,
+                text: '1y'
+            }, {
+                type: 'all',
+                text: 'All'
+            }],
+            selected: 3
+        },
 
+        yAxis: {
             title: {
-                text: 'Überblick'
-            },
+                text: 'Energielevel (MW)'
+            }
+        },
 
-            subtitle: {
-                text: 'Built chart in ...' // dummy text to reserve space for dynamic subtitle
-            },
+        xAxis: {
+            titel: {
+                text: 'Zeit'
+            }
+        },
 
-            series: [{
-                name: 'Erneuerbare Produktion ohne PV',
+        title: {
+            text: 'Überblick'
+        },
+
+        series: [{
+            name: 'Erneuerbare Produktion ohne PV',
+            data: energy_data.map(function(item) {
+                return item.b - item.e
+            }),
+            pointStart: 1199142000000,
+            pointInterval: 10800000,
+            allowPointSelect: true,
+            tooltip: {
+                valueDecimals: 1,
+                valueSuffix: 'MW'
+            },
+            point: {
+                events: {
+                    click: function(event) {
+                        graphClick(event);
+                    }
+                }
+            }
+            },
+            {
+                name: 'Erneuerbare Produktion mit PV',
                 data: energy_data.map(function(item) {
-                    return item.b - item.e
+                    return item.b
                 }),
                 pointStart: 1199142000000,
                 pointInterval: 10800000,
@@ -240,64 +248,42 @@ app.controller('MainCtrl', function ($scope, data) {
                             graphClick(event);
                         }
                     }
-                }
                 },
-                {
-                    name: 'Erneuerbare Produktion mit PV',
-                    data: energy_data.map(function(item) {
-                        return item.b
-                    }),
-                    pointStart: 1199142000000,
-                    pointInterval: 10800000,
-                    allowPointSelect: true,
-                    tooltip: {
-                        valueDecimals: 1,
-                        valueSuffix: 'MW'
-                    },
-                    point: {
-                        events: {
-                            click: function(event) {
-                                graphClick(event);
-                            }
-                        }
-                    },
-                    color: '#FF9500'
-                },
-                {
-                    name: 'Landesverbrauch',
-                    data: energy_data.map(function(item) {
-                        return item.a
-                    }),
-                    pointStart: 1199142000000,
-                    pointInterval: 10800000,
-                    allowPointSelect: true,
-                    tooltip: {
-                        valueDecimals: 1,
-                        valueSuffix: 'MW'
-                    },
-                    point: {
-                        events: {
-                            click: function(event) {
-                                graphClick(event);
-                            }
-                        }
-                    },
-                    color: '#f00'
-                }],
-            legend: {
-                enabled: true,
-                floating: true,
-                verticalAlign: 'top',
-                align:'center',
-                y:10
+                color: '#FF9500'
             },
-
-        });
-        console.log(data);
+            {
+                name: 'Landesverbrauch',
+                data: energy_data.map(function(item) {
+                    return item.a
+                }),
+                pointStart: 1199142000000,
+                pointInterval: 10800000,
+                allowPointSelect: true,
+                tooltip: {
+                    valueDecimals: 1,
+                    valueSuffix: 'MW'
+                },
+                point: {
+                    events: {
+                        click: function(event) {
+                            graphClick(event);
+                        }
+                    }
+                },
+                color: '#f00'
+            }],
+        legend: {
+            enabled: true,
+            floating: true,
+            verticalAlign: 'top',
+            align:'center',
+            y:10
+        }
     });
+    console.log(data);
+
 
     function graphClick(event) {
-        console.log($scope.battery);
         $scope.currentObject = energy_data[event.point.index];
         $scope.updateGraphs()
     }
