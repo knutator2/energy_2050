@@ -156,98 +156,208 @@ app.controller('MainCtrl', function ($scope, data) {
         }]
     });
 
-    data.sumsWithoutPV(function(err, data){
-        console.log(data);
-        data = data.map(function(item, index) {
-            return { x : index, y: item.Summe }
-        });
-        console.log (data);
-        var graph = new Rickshaw.Graph({
-            element: element,
-            width: 540,
-            height: 240,
-            renderer: 'line',
-            series: [
-                {
-                    name: "Erneuerbare Energien ohne Photovoltaik",
-                    data: data,
-                    color: palette.color()
-                }
-            ]
-        } );
-        var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=large-dataset.json&callback=?', function (data) {
 
-        var y_axis = new Rickshaw.Graph.Axis.Y( {
-            graph: graph,
-            orientation: 'left',
-            tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-            element: document.getElementById('y_axis'),
-        } );
+        // Create a timer
+        var start = +new Date();
 
-        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-            onShow: function(event){
-                var index = Date.parse($(".x_label").text()) / 1000;
-                console.log(index);
-                console.log(energy_data[index]);
-                $scope.currentObject = energy_data[index];
-
-            },
-            graph: graph
-        } );
-
-        $scope.rickshawClick = function() {
-            console.log('clicked rickshaw');
-            console.log($scope.currentObject);
-            balk_saison.series[0].setData(
-                [{
-                    name: 'Power to gas',
-                    y: $scope.currentObject.s,
-                    color: '#F5E10C'
+        // Create the chart
+        $('#chart-container').highcharts('StockChart', {
+            chart: {
+                events: {
+                    load: function () {
+                        if (!window.isComparing) {
+                            this.setTitle(null, {
+                                text: 'Built chart in ' + (new Date() - start) + 'ms'
+                            });
+                        }
+                    }
                 },
+                zoomType: 'x'
+            },
+
+            rangeSelector: {
+
+                buttons: [{
+                    type: 'day',
+                    count: 3,
+                    text: '3d'
+                }, {
+                    type: 'week',
+                    count: 1,
+                    text: '1w'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1m'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6m'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1y'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }],
+                selected: 3
+            },
+
+            yAxis: {
+                title: {
+                    text: 'Summe der erneuerbaren Produktion (MW)'
+                }
+            },
+
+            title: {
+                text: 'Überblick'
+            },
+
+            subtitle: {
+                text: 'Built chart in ...' // dummy text to reserve space for dynamic subtitle
+            },
+
+            series: [{
+                name: 'Summe der erneuerbaren Produktion ohne PV',
+                data: energy_data.map(function(item) {
+                    return item.b - item.e
+                }),
+                pointStart: 1199142000000,
+                pointInterval: 10800000,
+                allowPointSelect: true,
+                tooltip: {
+                    valueDecimals: 1,
+                    valueSuffix: 'MW'
+                },
+                point: {
+                    events: {
+                        click: function(event) {
+                            console.log(this.y);
+                            console.log(event);
+                        }
+                    }
+                }
+            },
                 {
-                    name: 'Speicherseen',
-                    y: $scope.currentObject.q,
-                    color: '#1784E3'
+                    name: 'Gesamt mit PV',
+                    data: energy_data.map(function(item) {
+                        return item.b
+                    }),
+                    pointStart: 1199142000000,
+                    pointInterval: 10800000,
+                    allowPointSelect: true,
+                    tooltip: {
+                        valueDecimals: 1,
+                        valueSuffix: 'MW'
+                    },
+                    point: {
+                        events: {
+                            click: function(event) {
+                                console.log(this.y);
+                                console.log(event);
+                            }
+                        }
+                    }
                 }]
-            , true); //true / false to redraw
-            balk_tag.series[0].setData(
-                [{
-                    name: 'Batterien',
-                    y: $scope.currentObject.r,
-                    color: '#228012'
-                }]
-                , true); //true / false to redraw
 
-        };
-
-        var slider = new Rickshaw.Graph.RangeSlider({
-            graph: graph,
-            element: document.querySelector('#slider')
         });
-
-        var legend = new Rickshaw.Graph.Legend( {
-            element: document.querySelector('#legend'),
-            graph: graph
-        });
-
-        var offsetForm = document.getElementById('offset_form');
-
-        offsetForm.addEventListener('change', function(e) {
-            var offsetMode = e.target.value;
-
-            if (offsetMode == 'lines') {
-                graph.setRenderer('line');
-                graph.offset = 'zero';
-            } else {
-                graph.setRenderer('stack');
-                graph.offset = offsetMode;
-            }
-            graph.render();
-
-        }, false);
-
-        graph.render();
+        console.log(data);
     });
+
+    // data.sumsWithoutPV(function(err, data){
+    //     console.log(data);
+    //     data = data.map(function(item, index) {
+    //         return { x : index, y: item.Summe }
+    //     });
+    //     console.log (data);
+    //     var graph = new Rickshaw.Graph({
+    //         element: element,
+    //         width: 540,
+    //         height: 240,
+    //         renderer: 'line',
+    //         series: [
+    //             {
+    //                 name: "Erneuerbare Energien ohne Photovoltaik",
+    //                 data: data,
+    //                 color: palette.color()
+    //             }
+    //         ]
+    //     } );
+    //     var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+    //
+    //     var y_axis = new Rickshaw.Graph.Axis.Y( {
+    //         graph: graph,
+    //         orientation: 'left',
+    //         tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+    //         element: document.getElementById('y_axis'),
+    //     } );
+    //
+    //     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    //         onShow: function(event){
+    //             var index = Date.parse($(".x_label").text()) / 1000;
+    //             console.log(index);
+    //             console.log(energy_data[index]);
+    //             $scope.currentObject = energy_data[index];
+    //
+    //         },
+    //         graph: graph
+    //     } );
+    //
+    //     $scope.rickshawClick = function() {
+    //         console.log('clicked rickshaw');
+    //         console.log($scope.currentObject);
+    //         balk_saison.series[0].setData(
+    //             [{
+    //                 name: 'Power to gas',
+    //                 y: $scope.currentObject.s,
+    //                 color: '#F5E10C'
+    //             },
+    //             {
+    //                 name: 'Speicherseen',
+    //                 y: $scope.currentObject.q,
+    //                 color: '#1784E3'
+    //             }]
+    //         , true); //true / false to redraw
+    //         balk_tag.series[0].setData(
+    //             [{
+    //                 name: 'Batterien',
+    //                 y: $scope.currentObject.r,
+    //                 color: '#228012'
+    //             }]
+    //             , true); //true / false to redraw
+    //
+    //     };
+    //
+    //     var slider = new Rickshaw.Graph.RangeSlider({
+    //         graph: graph,
+    //         element: document.querySelector('#slider')
+    //     });
+    //
+    //     var legend = new Rickshaw.Graph.Legend( {
+    //         element: document.querySelector('#legend'),
+    //         graph: graph
+    //     });
+    //
+    //     var offsetForm = document.getElementById('offset_form');
+    //
+    //     offsetForm.addEventListener('change', function(e) {
+    //         var offsetMode = e.target.value;
+    //
+    //         if (offsetMode == 'lines') {
+    //             graph.setRenderer('line');
+    //             graph.offset = 'zero';
+    //         } else {
+    //             graph.setRenderer('stack');
+    //             graph.offset = offsetMode;
+    //         }
+    //         graph.render();
+    //
+    //     }, false);
+    //
+    //     graph.render();
+    // });
 
 
 

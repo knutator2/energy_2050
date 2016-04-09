@@ -1,22 +1,25 @@
 ---
 layout: default
 ---
-<div class="container-fluid">
-    <div id="chart_container" ng-app="App" ng-controller="MainCtrl">
-        <div id="y_axis"></div>
-        <div id="chart" ng-click="rickshawClick()"></div>
-        <div id="legend"></div>
-        <form id="offset_form" class="toggler">
-            <input type="radio" name="offset" id="lines" value="lines" checked>
-            <label class="lines" for="lines">lines</label><br>
-            <input type="radio" name="offset" id="stack" value="zero">
-            <label class="stack" for="stack">stack</label>
-        </form>
-    </div>
-    <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width: 900px;">
-        <div class="ui-slider-range ui-widget-header" style="left: 13.3691%; width: 35.566%;"></div>
-        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 13.3691%;"></a>
-        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 48.9351%;"></a>
+<div class="container-fluid" ng-app="App" ng-controller="MainCtrl">
+    <!--<div id="chart_container" >-->
+        <!--<div id="y_axis"></div>-->
+        <!--<div id="chart" ng-click="rickshawClick()"></div>-->
+        <!--<div id="legend"></div>-->
+        <!--<form id="offset_form" class="toggler">-->
+            <!--<input type="radio" name="offset" id="lines" value="lines" checked>-->
+            <!--<label class="lines" for="lines">lines</label><br>-->
+            <!--<input type="radio" name="offset" id="stack" value="zero">-->
+            <!--<label class="stack" for="stack">stack</label>-->
+        <!--</form>-->
+    <!--</div>-->
+    <!--<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width: 900px;">-->
+        <!--<div class="ui-slider-range ui-widget-header" style="left: 13.3691%; width: 35.566%;"></div>-->
+        <!--<a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 13.3691%;"></a>-->
+        <!--<a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 48.9351%;"></a>-->
+    <!--</div>-->
+    <div class="row">
+        <div id="chart-container" style="height: 400px; min-width: 310px"></div>
     </div>
 
     <div class="row">
