@@ -13,6 +13,7 @@ app.controller('MainCtrl', function ($scope, data) {
     var saisonmax = Math.max(gasmax.s, watermax.q);
     var tagmax = _.max(energy_data, function(item) { return item.r}).r;
 
+    var overflow_without_batt_max = energy_data[energy_data.length - 1].x;
 
 
     var balk_saison = new Highcharts.Chart({
@@ -112,9 +113,10 @@ app.controller('MainCtrl', function ($scope, data) {
     });
 
     // Create the chart
-    var balk_ueberschuss = $('#balkendiagramm_ueberschuss').highcharts({
+    var balk_ueberschuss = new Highcharts.Chart({
         chart: {
-            type: 'column'
+            type: 'column',
+            renderTo : document.getElementById('balkendiagramm_ueberschuss')
         },
         title: {
             text: 'Überschuss'
@@ -125,7 +127,8 @@ app.controller('MainCtrl', function ($scope, data) {
         yAxis: {
             title: {
                 text: 'GWh'
-            }
+            },
+            max: overflow_without_batt_max
 
         },
         legend: {
@@ -265,26 +268,38 @@ app.controller('MainCtrl', function ($scope, data) {
     });
 
     function graphClick(event) {
+        console.log($scope.battery);
         $scope.currentObject = energy_data[event.point.index];
+        $scope.updateGraphs()
+    }
+
+    $scope.updateGraphs = function() {
         balk_saison.series[0].setData(
-                    [{
-                        name: 'Power to gas',
-                        y: $scope.currentObject.s,
-                        color: '#F5E10C'
-                    },
-                    {
-                        name: 'Speicherseen',
-                        y: $scope.currentObject.q,
-                        color: '#1784E3'
-                    }]
-                , true); //true / false to redraw
-                balk_tag.series[0].setData(
-                    [{
-                        name: 'Batterien',
-                        y: $scope.currentObject.r,
-                        color: '#228012'
-                    }]
-                    , true); //true / false to redraw
+            [{
+                name: 'Power to gas',
+                y: $scope.currentObject.s,
+                color: '#F5E10C'
+            },
+                {
+                    name: 'Speicherseen',
+                    y: $scope.currentObject.q,
+                    color: '#1784E3'
+                }]
+            , true); //true / false to redraw
+        balk_tag.series[0].setData(
+            [{
+                name: 'Batterien',
+                y: $scope.currentObject.r,
+                color: '#228012'
+            }]
+            , true); //true / false to redraw
+        var overflow = $scope.battery ? $scope.currentObject.v : $scope.currentObject.x;
+        balk_ueberschuss.series[0].setData(
+            [
+                {
+                    y: overflow,
+                }]
+            , true); //true / false to redraw
     }
 
     // data.sumsWithoutPV(function(err, data){
