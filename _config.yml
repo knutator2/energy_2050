@@ -9,10 +9,10 @@
 title: Energiestrategie 2050 verstehen - Entdecke eine Schweiz mit 100% erneuerbaren Energien
 email: your-email@domain.com
 description: > 
-  Wir simulieren die Stromproduktion 2050 basierend auf den Wetterdaten 2002 bis 2008 und den Vorgaben der Energiestrategie 2050.
-  Es entsteht eine Stromversorgung mit massiven Sommerüberschüssen und einem Energiemanko im Winter.
-  Wir zeigen auf, wie diese Schwankungen mit saisonalen Speichern und Tagesspeichern
-  aufgefangen werden kann. Die Energiewende ist möglich!
+  Wir simulieren die Stromproduktion 2050 basierend auf den Wetterdaten 2002 bis 2008. Es entsteht
+  eine hoch volatile Stromversorgung, mit massiven Sommerüberschüssen und Energiemanko im Winter. 
+  Wir zeigen auf, wie die Schwankungen mit saisonalen Speichern und Tagesspeichern (Batteriespeicherung) 
+  aufgefangen werden können und damit die Energiewende möglich wird.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: jekyllrb
