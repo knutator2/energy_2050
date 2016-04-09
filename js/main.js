@@ -201,9 +201,20 @@ app.controller('MainCtrl', function ($scope, data) {
         },
 
         xAxis: {
-            titel: {
+            title: {
                 text: 'Zeit'
-            }
+            },
+            plotBands: [{
+                color: 'orange', // Color value
+                from: 3, // Start of the plot band
+                to: 4 // End of the plot band
+            }],
+            plotLines: [{
+                color: 'red', // Color value
+                dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+                value: 3, // Value of where the line will appear
+                width: 2 // Width of the line
+            }]
         },
 
         title: {
@@ -267,6 +278,9 @@ app.controller('MainCtrl', function ($scope, data) {
                     events: {
                         click: function(event) {
                             graphClick(event);
+                        },
+                        mouseOver: function(event) {
+                            graphHover(event);
                         }
                     }
                 },
@@ -285,6 +299,12 @@ app.controller('MainCtrl', function ($scope, data) {
 
     function graphClick(event) {
         $scope.currentObject = energy_data[event.point.index];
+        $scope.updateGraphs()
+    }
+
+
+    function graphHover(event) {
+        $scope.currentObject = energy_data[event.target.index];
         $scope.updateGraphs()
     }
 
