@@ -7,7 +7,154 @@ app.controller('MainCtrl', function ($scope, data) {
     var element = document.getElementById('chart');
     console.log(element);
 
+    var gasmax = _.max(energy_data, function(item) { return item.s});
+    var watermax = _.max(energy_data, function(item) { return item.q});
 
+    var saisonmax = Math.max(gasmax.s, watermax.q);
+    var tagmax = _.max(energy_data, function(item) { return item.r}).r;
+
+
+
+    var balk_saison = new Highcharts.Chart({
+        chart: {
+            renderTo: document.getElementById('balkendiagramm_saison'),
+            type: 'column'
+        },
+        title: {
+            text: 'Saisonale Speicher'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'GWh'
+            },
+            max: saisonmax
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}'
+                }
+            }
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Power to gas',
+                y: 56.33,
+                color: '#F5E10C'
+            }, {
+                name: 'Speicherseen',
+                y: 24.03,
+                color: '#1784E3'
+            }]
+        }]
+    });
+    // Create the chart
+    var balk_tag = new Highcharts.Chart({
+        chart: {
+            renderTo: document.getElementById('balkendiagramm_tag'),
+            type: 'column'
+        },
+        title: {
+            text: 'Tagesspeicher'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'GWh'
+            },
+            max: tagmax
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}'
+                }
+            }
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Batterien',
+                y: 12,
+                color: '#228012'
+            }]
+        }]
+    });
+
+    // Create the chart
+    var balk_ueberschuss = $('#balkendiagramm_ueberschuss').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Überschuss'
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'GWh'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}'
+                }
+            }
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'Brands',
+            colorByPoint: false,
+            data: [{
+                name: 'Überschuss',
+                y: 12,
+                color: '#ED1915'
+            }]
+        }]
+    });
 
     data.sumsWithoutPV(function(err, data){
         console.log(data);
@@ -21,26 +168,6 @@ app.controller('MainCtrl', function ($scope, data) {
             height: 240,
             renderer: 'line',
             series: [
-                // {
-                //     name: "Northeast",
-                //     data: [ { x: -1893456000, y: 25868573 }, { x: -1577923200, y: 29662053 }, { x: -1262304000, y: 34427091 }, { x: -946771200, y: 35976777 }, { x: -631152000, y: 39477986 }, { x: -315619200, y: 44677819 }, { x: 0, y: 49040703 }, { x: 315532800, y: 49135283 }, { x: 631152000, y: 50809229 }, { x: 946684800, y: 53594378 }, { x: 1262304000, y: 55317240 } ],
-                //     color: palette.color()
-                // },
-                // {
-                //     name: "Midwest",
-                //     data: [ { x: -1893456000, y: 29888542 }, { x: -1577923200, y: 34019792 }, { x: -1262304000, y: 38594100 }, { x: -946771200, y: 40143332 }, { x: -631152000, y: 44460762 }, { x: -315619200, y: 51619139 }, { x: 0, y: 56571663 }, { x: 315532800, y: 58865670 }, { x: 631152000, y: 59668632 }, { x: 946684800, y: 64392776 }, { x: 1262304000, y: 66927001 } ],
-                //     color: palette.color()
-                // },
-                // {
-                //     name: "South",
-                //     data: [ { x: -1893456000, y: 29389330 }, { x: -1577923200, y: 33125803 }, { x: -1262304000, y: 37857633 }, { x: -946771200, y: 41665901 }, { x: -631152000, y: 47197088 }, { x: -315619200, y: 54973113 }, { x: 0, y: 62795367 }, { x: 315532800, y: 75372362 }, { x: 631152000, y: 85445930 }, { x: 946684800, y: 100236820 }, { x: 1262304000, y: 114555744 } ],
-                //     color: palette.color()
-                // },
-                // {
-                //     name: "West",
-                //     data: [ { x: -1893456000, y: 7082086 }, { x: -1577923200, y: 9213920 }, { x: -1262304000, y: 12323836 }, { x: -946771200, y: 14379119 }, { x: -631152000, y: 20189962 }, { x: -315619200, y: 28053104 }, { x: 0, y: 34804193 }, { x: 315532800, y: 43172490 }, { x: 631152000, y: 52786082 }, { x: 946684800, y: 63197932 }, { x: 1262304000, y: 71945553 } ],
-                //     color: palette.color()
-                // }
                 {
                     name: "Erneuerbare Energien ohne Photovoltaik",
                     data: data,
@@ -61,8 +188,8 @@ app.controller('MainCtrl', function ($scope, data) {
             onShow: function(event){
                 var index = Date.parse($(".x_label").text()) / 1000;
                 console.log(index);
-                console.log(data[index]);
-                $scope.currentObject = data[index];
+                console.log(energy_data[index]);
+                $scope.currentObject = energy_data[index];
 
             },
             graph: graph
@@ -70,7 +197,28 @@ app.controller('MainCtrl', function ($scope, data) {
 
         $scope.rickshawClick = function() {
             console.log('clicked rickshaw');
-        }
+            console.log($scope.currentObject);
+            balk_saison.series[0].setData(
+                [{
+                    name: 'Power to gas',
+                    y: $scope.currentObject.s,
+                    color: '#F5E10C'
+                },
+                {
+                    name: 'Speicherseen',
+                    y: $scope.currentObject.q,
+                    color: '#1784E3'
+                }]
+            , true); //true / false to redraw
+            balk_tag.series[0].setData(
+                [{
+                    name: 'Batterien',
+                    y: $scope.currentObject.r,
+                    color: '#228012'
+                }]
+                , true); //true / false to redraw
+
+        };
 
         var slider = new Rickshaw.Graph.RangeSlider({
             graph: graph,
@@ -100,6 +248,9 @@ app.controller('MainCtrl', function ($scope, data) {
 
         graph.render();
     });
+
+
+
 });
 
 app.factory('data', function($http) {
