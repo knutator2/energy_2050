@@ -234,8 +234,7 @@ app.controller('MainCtrl', function ($scope, data) {
                 point: {
                     events: {
                         click: function(event) {
-                            console.log(this.y);
-                            console.log(event);
+                            graphClick(event);
                         }
                     }
                 }
@@ -255,8 +254,7 @@ app.controller('MainCtrl', function ($scope, data) {
                     point: {
                         events: {
                             click: function(event) {
-                                console.log(this.y);
-                                console.log(event);
+                                graphClick(event);
                             }
                         }
                     }
@@ -265,6 +263,29 @@ app.controller('MainCtrl', function ($scope, data) {
         });
         console.log(data);
     });
+
+    function graphClick(event) {
+        $scope.currentObject = energy_data[event.point.index];
+        balk_saison.series[0].setData(
+                    [{
+                        name: 'Power to gas',
+                        y: $scope.currentObject.s,
+                        color: '#F5E10C'
+                    },
+                    {
+                        name: 'Speicherseen',
+                        y: $scope.currentObject.q,
+                        color: '#1784E3'
+                    }]
+                , true); //true / false to redraw
+                balk_tag.series[0].setData(
+                    [{
+                        name: 'Batterien',
+                        y: $scope.currentObject.r,
+                        color: '#228012'
+                    }]
+                    , true); //true / false to redraw
+    }
 
     // data.sumsWithoutPV(function(err, data){
     //     console.log(data);
