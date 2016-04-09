@@ -93,7 +93,31 @@ $on-laptop:        800px;
 .infobox {
   background: #F5F5F5;
   height: auto;
+
+}
+.site-header {
+  border-top: none;
 }
 .page-content {
   padding-top: 10px;
+}
+
+
+@media (min-width: 1px) {
+  .site-title {
+    font-size: 18px;
+  }
+  .infobox h3 {
+    font-size: 18px;
+  }
+  .infobox {
+    padding-top: 0.5px;
+    padding-bottom: 0.5px
+  }
+
+}
+@media (min-width: 992px) {
+  .site-title {
+    font-size: 25px;
+  }
 }
