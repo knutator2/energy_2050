@@ -56,11 +56,11 @@ app.controller('MainCtrl', function ($scope, data) {
             colorByPoint: true,
             data: [{
                 name: 'Power to gas',
-                y: 56.33,
+                y: 0,
                 color: '#F5E10C'
             }, {
                 name: 'Speicherseen',
-                y: 24.03,
+                y: 0,
                 color: '#1784E3'
             }]
         }]
@@ -106,7 +106,7 @@ app.controller('MainCtrl', function ($scope, data) {
             colorByPoint: true,
             data: [{
                 name: 'Batterien',
-                y: 12,
+                y: 0,
                 color: '#228012'
             }]
         }]
@@ -153,7 +153,7 @@ app.controller('MainCtrl', function ($scope, data) {
             colorByPoint: false,
             data: [{
                 name: 'Überschuss',
-                y: 12,
+                y: 0,
                 color: '#ED1915'
             }]
         }]
@@ -171,7 +171,7 @@ app.controller('MainCtrl', function ($scope, data) {
                     load: function () {
                         if (!window.isComparing) {
                             this.setTitle(null, {
-                                text: 'Built chart in ' + (new Date() - start) + 'ms'
+                                text: ''
                             });
                         }
                     }
@@ -210,7 +210,7 @@ app.controller('MainCtrl', function ($scope, data) {
 
             yAxis: {
                 title: {
-                    text: 'Summe der erneuerbaren Produktion (MW)'
+                    text: 'Energielevel (MW)'
                 }
             },
 
@@ -241,7 +241,7 @@ app.controller('MainCtrl', function ($scope, data) {
                         }
                     }
                 }
-            },
+                },
                 {
                     name: 'Gesamt mit PV',
                     data: energy_data.map(function(item) {
@@ -261,7 +261,14 @@ app.controller('MainCtrl', function ($scope, data) {
                             }
                         }
                     }
-                }]
+                }],
+            legend: {
+                enabled: true,
+                floating: true,
+                verticalAlign: 'top',
+                align:'center',
+                y:10
+            },
 
         });
         console.log(data);
@@ -274,33 +281,37 @@ app.controller('MainCtrl', function ($scope, data) {
     }
 
     $scope.updateGraphs = function() {
-        balk_saison.series[0].setData(
-            [{
-                name: 'Power to gas',
-                y: $scope.currentObject.s,
-                color: '#F5E10C'
-            },
-                {
-                    name: 'Speicherseen',
-                    y: $scope.currentObject.q,
-                    color: '#1784E3'
+        if ($scope.currentObject) {
+            balk_saison.series[0].setData(
+                [{
+                    name: 'Power to gas',
+                    y: $scope.currentObject.s,
+                    color: '#F5E10C'
+                },
+                    {
+                        name: 'Speicherseen',
+                        y: $scope.currentObject.q,
+                        color: '#1784E3'
+                    }]
+                , true); //true / false to redraw
+            var tag_level = $scope.battery ? $scope.currentObject.r : 0;
+            balk_tag.series[0].setData(
+                [{
+                    name: 'Batterien',
+                    y: tag_level,
+                    color: '#228012'
                 }]
-            , true); //true / false to redraw
-        balk_tag.series[0].setData(
-            [{
-                name: 'Batterien',
-                y: $scope.currentObject.r,
-                color: '#228012'
-            }]
-            , true); //true / false to redraw
-        var overflow = $scope.battery ? $scope.currentObject.v : $scope.currentObject.x;
-        balk_ueberschuss.series[0].setData(
-            [
-                {
-                    y: overflow,
-                }]
-            , true); //true / false to redraw
-    }
+                , true); //true / false to redraw
+
+            var overflow = $scope.battery ? $scope.currentObject.v : $scope.currentObject.x;
+            balk_ueberschuss.series[0].setData(
+                [
+                    {
+                        y: overflow,
+                    }]
+                , true); //true / false to redraw
+        }
+    };
 
     // data.sumsWithoutPV(function(err, data){
     //     console.log(data);
