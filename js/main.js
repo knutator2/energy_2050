@@ -119,8 +119,10 @@ app.controller('MainCtrl', function ($scope, data) {
             renderTo : document.getElementById('balkendiagramm_ueberschuss')
         },
         title: {
-            text: 'Überschuss'
+            useHTML: true,
+            text: 'Überschuss (Summe)</span>'
         },
+
         xAxis: {
             type: 'category'
         },
@@ -314,12 +316,12 @@ app.controller('MainCtrl', function ($scope, data) {
                 [{
                     name: 'Power to gas',
                     y: $scope.currentObject.s,
-                    color: '#F5E10C'
+                    color: '#576063'
                 },
                     {
                         name: 'Speicherseen',
                         y: $scope.currentObject.q,
-                        color: '#1784E3'
+                        color: '#576063'
                     }]
                 , true); //true / false to redraw
             var tag_level = $scope.battery ? $scope.currentObject.r : 0;
@@ -327,7 +329,7 @@ app.controller('MainCtrl', function ($scope, data) {
                 [{
                     name: 'Batterien',
                     y: tag_level,
-                    color: '#228012'
+                    color: '#576063'
                 }]
                 , true); //true / false to redraw
 
