@@ -119,8 +119,10 @@ app.controller('MainCtrl', function ($scope, data) {
             renderTo : document.getElementById('balkendiagramm_ueberschuss')
         },
         title: {
-            text: 'Überschuss'
+            useHTML: true,
+            text: 'Überschuss (Summe)</span>'
         },
+
         xAxis: {
             type: 'category'
         },
