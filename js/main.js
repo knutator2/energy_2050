@@ -2,7 +2,6 @@ var app = angular.module('App', []);
 
 app.controller('MainCtrl', function ($scope, data) {
 
-    var palette = new Rickshaw.Color.Palette();
 
     var element = document.getElementById('chart');
     console.log(element);
@@ -342,100 +341,6 @@ app.controller('MainCtrl', function ($scope, data) {
                 , true); //true / false to redraw
         }
     };
-
-    // data.sumsWithoutPV(function(err, data){
-    //     console.log(data);
-    //     data = data.map(function(item, index) {
-    //         return { x : index, y: item.Summe }
-    //     });
-    //     console.log (data);
-    //     var graph = new Rickshaw.Graph({
-    //         element: element,
-    //         width: 540,
-    //         height: 240,
-    //         renderer: 'line',
-    //         series: [
-    //             {
-    //                 name: "Erneuerbare Energien ohne Photovoltaik",
-    //                 data: data,
-    //                 color: palette.color()
-    //             }
-    //         ]
-    //     } );
-    //     var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
-    //
-    //     var y_axis = new Rickshaw.Graph.Axis.Y( {
-    //         graph: graph,
-    //         orientation: 'left',
-    //         tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-    //         element: document.getElementById('y_axis'),
-    //     } );
-    //
-    //     var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-    //         onShow: function(event){
-    //             var index = Date.parse($(".x_label").text()) / 1000;
-    //             console.log(index);
-    //             console.log(energy_data[index]);
-    //             $scope.currentObject = energy_data[index];
-    //
-    //         },
-    //         graph: graph
-    //     } );
-    //
-    //     $scope.rickshawClick = function() {
-    //         console.log('clicked rickshaw');
-    //         console.log($scope.currentObject);
-    //         balk_saison.series[0].setData(
-    //             [{
-    //                 name: 'Power to gas',
-    //                 y: $scope.currentObject.s,
-    //                 color: '#F5E10C'
-    //             },
-    //             {
-    //                 name: 'Speicherseen',
-    //                 y: $scope.currentObject.q,
-    //                 color: '#1784E3'
-    //             }]
-    //         , true); //true / false to redraw
-    //         balk_tag.series[0].setData(
-    //             [{
-    //                 name: 'Batterien',
-    //                 y: $scope.currentObject.r,
-    //                 color: '#228012'
-    //             }]
-    //             , true); //true / false to redraw
-    //
-    //     };
-    //
-    //     var slider = new Rickshaw.Graph.RangeSlider({
-    //         graph: graph,
-    //         element: document.querySelector('#slider')
-    //     });
-    //
-    //     var legend = new Rickshaw.Graph.Legend( {
-    //         element: document.querySelector('#legend'),
-    //         graph: graph
-    //     });
-    //
-    //     var offsetForm = document.getElementById('offset_form');
-    //
-    //     offsetForm.addEventListener('change', function(e) {
-    //         var offsetMode = e.target.value;
-    //
-    //         if (offsetMode == 'lines') {
-    //             graph.setRenderer('line');
-    //             graph.offset = 'zero';
-    //         } else {
-    //             graph.setRenderer('stack');
-    //             graph.offset = offsetMode;
-    //         }
-    //         graph.render();
-    //
-    //     }, false);
-    //
-    //     graph.render();
-    // });
-
 
 
 });
