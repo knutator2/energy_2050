@@ -1,7 +1,6 @@
 var app = angular.module('App', []);
 
-app.controller('MainCtrl', function ($scope, data) {
-
+app.controller('MainCtrl', function ($scope, $interval, data) {
 
     var element = document.getElementById('chart');
     console.log(element);
@@ -14,6 +13,13 @@ app.controller('MainCtrl', function ($scope, data) {
 
     var overflow_without_batt_max = energy_data[energy_data.length - 1].x;
 
+    var hasPlotline = false;
+    var pointstart = 1199142000000;
+    var pointInterval = 10800000;
+    var currentSimValue = pointstart;
+    var currentSimIndex = 0;
+    var stepwidth = 10;
+
 
     var balk_saison = new Highcharts.Chart({
         chart: {
@@ -24,7 +30,7 @@ app.controller('MainCtrl', function ($scope, data) {
             text: 'Saisonale Speicher'
         },
         xAxis: {
-            type: 'category'
+            type: 'category',
         },
         yAxis: {
             title: {
@@ -164,8 +170,10 @@ app.controller('MainCtrl', function ($scope, data) {
 
 
     // Create the chart
-    $('#chart-container').highcharts('StockChart', {
-
+    var stockchart = Highcharts.StockChart({
+        chart: {
+            renderTo : document.getElementById('chart-container')
+        },
         rangeSelector: {
 
             buttons: [{
@@ -204,18 +212,7 @@ app.controller('MainCtrl', function ($scope, data) {
         xAxis: {
             title: {
                 text: 'Zeit'
-            },
-            plotBands: [{
-                color: 'orange', // Color value
-                from: 3, // Start of the plot band
-                to: 4 // End of the plot band
-            }],
-            plotLines: [{
-                color: 'red', // Color value
-                dashStyle: 'longdashdot', // Style of the plot line. Default to solid
-                value: 3, // Value of where the line will appear
-                width: 2 // Width of the line
-            }]
+            }
         },
 
         title: {
@@ -227,8 +224,8 @@ app.controller('MainCtrl', function ($scope, data) {
             data: energy_data.map(function(item) {
                 return item.b - item.e
             }),
-            pointStart: 1199142000000,
-            pointInterval: 10800000,
+            pointStart: pointstart,
+            pointInterval: pointInterval,
             allowPointSelect: true,
             tooltip: {
                 valueDecimals: 1,
@@ -247,8 +244,8 @@ app.controller('MainCtrl', function ($scope, data) {
                 data: energy_data.map(function(item) {
                     return item.b
                 }),
-                pointStart: 1199142000000,
-                pointInterval: 10800000,
+                pointStart: pointstart,
+                pointInterval: pointInterval,
                 allowPointSelect: true,
                 tooltip: {
                     valueDecimals: 1,
@@ -268,8 +265,8 @@ app.controller('MainCtrl', function ($scope, data) {
                 data: energy_data.map(function(item) {
                     return item.a
                 }),
-                pointStart: 1199142000000,
-                pointInterval: 10800000,
+                pointStart: pointstart,
+                pointInterval: pointInterval,
                 allowPointSelect: true,
                 tooltip: {
                     valueDecimals: 1,
@@ -336,13 +333,39 @@ app.controller('MainCtrl', function ($scope, data) {
             balk_ueberschuss.series[0].setData(
                 [
                     {
-                        y: overflow,
+                        y: overflow
                     }]
                 , true); //true / false to redraw
         }
     };
 
+    $scope.startSimulation = function() {
+        if (hasPlotline) {
+            stockchart.xAxis[0].removePlotLine('simplotline');
+        }
 
+        stockchart.xAxis[0].addPlotLine({
+            value: pointstart,
+            color: 'red',
+            width: 2,
+            id: 'simplotline'
+        });
+
+        $interval(function() {
+            currentSimValue += pointInterval * stepwidth;
+            currentSimIndex += stepwidth;
+            stockchart.xAxis[0].removePlotLine('simplotline');
+            stockchart.xAxis[0].addPlotLine({
+                value: currentSimValue,
+                color: 'red',
+                width: 2,
+                id: 'simplotline'
+            });
+            $scope.currentObject = energy_data[currentSimIndex];
+            $scope.updateGraphs();
+
+        }, 20, energy_data.length);
+    }
 });
 
 app.factory('data', function($http) {
